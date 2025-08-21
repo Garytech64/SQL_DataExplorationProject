@@ -1,26 +1,31 @@
--- 1. Total Incidents
+-- Query 1: Count how many records are in the traffic incidents table
 SELECT COUNT(*) AS TotalIncidents
-FROM dbo.TrafficIncidents;
+FROM Real_Time_Traffic_Incident_Reports;
 
--- 2. Incidents per Location
-SELECT Location, COUNT(*) AS Incidents
-FROM dbo.TrafficIncidents
-GROUP BY Location
-ORDER BY Incidents DESC;
-
--- 3. Most Common Issues
-SELECT Issue_Reported, COUNT(*) AS Occurrences
-FROM dbo.TrafficIncidents
+-- Query 2: Find the top 5 most common incident types
+SELECT TOP 5 
+    Issue_Reported, 
+    COUNT(*) AS Total
+FROM Real_Time_Traffic_Incident_Reports
 GROUP BY Issue_Reported
-ORDER BY Occurrences DESC;
+ORDER BY Total DESC;
 
--- 4. Incidents by Date
-SELECT CAST(Published_Date AS DATE) AS IncidentDate, COUNT(*) AS Incidents
-FROM dbo.TrafficIncidents
-GROUP BY CAST(Published_Date AS DATE)
-ORDER BY IncidentDate;
+-- Query 3: Top 5 busiest days by number of incidents (handles timezone)
+SELECT TOP 5
+    TRY_CONVERT(DATE, LEFT(Published_Date, 20)) AS Report_Date,
+    COUNT(*) AS Incident_Count
+FROM Real_Time_Traffic_Incident_Reports
+WHERE TRY_CONVERT(DATE, LEFT(Published_Date, 20)) IS NOT NULL
+GROUP BY TRY_CONVERT(DATE, LEFT(Published_Date, 20))
+ORDER BY COUNT(*) DESC;
 
--- 5. Filtering Example
+-- Query 4: Find the top 10 locations with the highest number of incidents
+SELECT TOP 10 location, COUNT(*) AS Incident_Count
+FROM Real_Time_Traffic_Incident_Reports
+GROUP BY location
+ORDER BY Incident_Count DESC;
+
+-- Query 5: Filter incidents for a specific type ("Traffic Hazard")
 SELECT *
-FROM dbo.TrafficIncidents
+FROM Real_Time_Traffic_Incident_Reports
 WHERE Issue_Reported = 'Traffic Hazard';
