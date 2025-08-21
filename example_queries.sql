@@ -9,3 +9,11 @@ SELECT TOP 5
 FROM Real_Time_Traffic_Incident_Reports
 GROUP BY Issue_Reported
 ORDER BY Total DESC;
+
+-- Query 3: Find the busiest days with the most reported incidents
+SELECT CAST(date_time AS DATE) AS Report_Date, COUNT(*) AS Incident_Count
+FROM Real_Time_Traffic_Incident_Reports
+GROUP BY CAST(date_time AS DATE)
+ORDER BY Incident_Count DESC
+LIMIT 5;
+
