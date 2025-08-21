@@ -23,4 +23,10 @@ FROM Real_Time_Traffic_Incident_Reports
 GROUP BY location
 ORDER BY Incident_Count DESC;
 
+-- Query 5: Filter incidents for a specific type ("Traffic Hazard")
+SELECT *
+FROM Real_Time_Traffic_Incident_Reports
+WHERE Issue_Reported = 'Traffic Hazard';
+
+
 
