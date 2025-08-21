@@ -17,3 +17,10 @@ GROUP BY CAST(date_time AS DATE)
 ORDER BY Incident_Count DESC
 LIMIT 5;
 
+-- Query 4: Find the top 10 locations with the highest number of incidents
+SELECT TOP 10 location, COUNT(*) AS Incident_Count
+FROM Real_Time_Traffic_Incident_Reports
+GROUP BY location
+ORDER BY Incident_Count DESC;
+
+
